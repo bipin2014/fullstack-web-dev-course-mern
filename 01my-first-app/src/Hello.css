@@ -1,0 +1,27 @@
+.background {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('./img.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.heading {
+    color: red;
+    font-size: 5rem;
+    margin: 10px;
+    text-shadow: 0 0 5px #efefef;
+}
+
+.description {
+    color: darkblue;
+    font-size: 2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: 0 0 5px #efefef;
+    margin: 10px;
+    text-align: center;
+}
