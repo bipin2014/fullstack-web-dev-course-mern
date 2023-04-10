@@ -1,0 +1,31 @@
+*{
+    background-color: bisque;
+    margin: 0;
+}
+
+.game {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+.game-board {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+.board-row {
+  display: flex;
+  flex: 1;
+}
+.square {
+  border: 1px solid #999;
+  flex: 1;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0;
+  text-align: center;
+}
+h1{
+    text-align: center;
+}
