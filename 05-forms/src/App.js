@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './App.css';
+// import './App.css';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
@@ -35,8 +35,8 @@ function App() {
   }, [errors, touched]);
 
   return (
-    <div className='App'>
-      <header className='App-header'>
+    <div className='text-center'>
+      <header className='flex flex-col items-center justify-center bg-slate-800 h-screen text-white'>
         <h1>Login Form</h1>
 
         <form noValidate onSubmit={formik.handleSubmit}>
@@ -45,10 +45,11 @@ function App() {
               type='string'
               name='name'
               id='name'
+              className='p-2.5 m-1 text-black'
               placeholder='Name'
               {...getFieldProps('name')}
             />
-            <div className='error'>{errors.name}</div>
+            <div className='text-sm text-red-500'>{errors.name}</div>
           </div>
 
           <div>
@@ -56,22 +57,26 @@ function App() {
               type='email'
               name='email'
               id='email'
+              className='p-2.5 m-1 text-black'
               placeholder='Email'
               {...getFieldProps('email')}
             />
-            <div className='error'>{errors.email}</div>
+            <div className='text-sm text-red-500'>{errors.email}</div>
           </div>
           <div>
             <input
               type='password'
               name='password'
               id='password'
+              className='p-2.5 m-1 text-black'
               placeholder='password'
               {...getFieldProps('password')}
             />
-            <div className='error'>{errors.password}</div>
+            <div className='text-sm text-red-500'>{errors.password}</div>
           </div>
-          <button type='submit'>Login</button>
+          <button className='bg-cyan-300 p-2.5 m-1 w-full' type='submit'>
+            Login
+          </button>
         </form>
       </header>
     </div>
