@@ -9,11 +9,16 @@ function App() {
 
   useEffect(() => {
     if (city) {
-      getWeatherData();
+      getWeatherData(getDatacb);
     }
   }, [city]);
 
-  const getWeatherData = async () => {
+  const getDatacb = (data) => {
+    console.log(data.list[0].weather[0].main);
+    setWeather(data.list[0].weather[0].main);
+  };
+
+  const getWeatherData = async (cb) => {
     try {
       const res = await fetch(
         `https://openweathermap.org/data/2.5/find?q=${city}&appid=${API_KEY}`,
@@ -22,9 +27,8 @@ function App() {
         }
       );
       const response = await res.json();
-      console.log(response.list[0].weather[0].main);
-      setWeather(response.list[0].weather[0].main);
-
+      cb(response)
+      console.log('after data');
     } catch (e) {
       console.log(e);
     }
