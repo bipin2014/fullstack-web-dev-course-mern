@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export default function SignUp() {
+export default function SignUp({ setShowModal = undefined }) {
 
     let userSchema = object({
         name: string().required(),
@@ -41,6 +41,9 @@ export default function SignUp() {
         console.log(apiUrl);
         axios.post(`${apiUrl}/api/users/signup`, data).then(res => {
             console.log(res.data);
+            if (setShowModal) {
+                setShowModal(false)
+            }
         }).catch(err => {
             console.log(err);
         })

@@ -7,6 +7,14 @@ import Homepage from './module/Home/Homepage.jsx'
 import SignUp from './module/auth/Signup/index.jsx'
 import Login from './module/auth/Login/index.jsx'
 import AuthProvier from './context/auth/AuthProvier.jsx'
+import Toaster from './module/common/Toaster/index.jsx'
+import ToastProvider from './context/toast/ToastProvider.jsx'
+import BlockAuthRoute from './routes/BlockAuthRoute.jsx'
+import Dashboard from './module/admin/Dashboard/index.jsx'
+import Users from './module/admin/Users/index.jsx'
+import Products from './module/admin/Products/index.jsx'
+import Brands from './module/admin/Brands/index.jsx'
+import UploadProvider from './context/uploadfile/UploadProvider.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,11 +27,34 @@ const router = createBrowserRouter([
       },
       {
         path: 'signup',
-        element: <SignUp />
+        element: <BlockAuthRoute><SignUp /></BlockAuthRoute>
       },
       {
         path: 'login',
-        element: <Login />
+        element: <BlockAuthRoute><Login /></BlockAuthRoute>
+      },
+      {
+        path: 'admin',
+        element: <Dashboard />,
+        children: [
+          {
+            path: 'dashboard',
+            element: <Homepage />
+          },
+          {
+            path: 'users',
+            element: <Users />
+          },
+          {
+            path: 'products',
+            element: <Products />
+          },
+          {
+            path: 'brands',
+            element: <Brands />
+          },
+
+        ]
       }
     ]
   }
@@ -44,8 +75,13 @@ AuthProvider->isAuth,user,login,logout
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvier>
-      <RouterProvider router={router} />
-    </AuthProvier>
+    <ToastProvider>
+      <AuthProvier>
+        <UploadProvider>
+          <Toaster />
+          <RouterProvider router={router} />
+        </UploadProvider>
+      </AuthProvier>
+    </ToastProvider>
   </React.StrictMode>,
 )

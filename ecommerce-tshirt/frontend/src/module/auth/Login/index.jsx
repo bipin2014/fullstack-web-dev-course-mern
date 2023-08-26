@@ -4,11 +4,17 @@ import { object, string, ref } from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { AuthContext } from '../../../context/auth/AuthContext';
+import { ToastContext } from '../../../context/toast/ToastContext';
+import { useNavigate } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Login() {
     const { login } = useContext(AuthContext)
+    const { showToast } = useContext(ToastContext);
+
+    const navigate = useNavigate();
+
     let userSchema = object({
         email: string().required().email(),
         password: string().required().min(6),
@@ -37,7 +43,11 @@ export default function Login() {
         axios.post(`${apiUrl}/api/users/login`, data).then(res => {
             console.log(res.data);
             login(res.data)
+            showToast({ show: true, title: 'Welcome Back', message: 'Login Success', type: 'success' })
+            navigate('/')
         }).catch(err => {
+            showToast({ show: true, title: 'Error', message: err.response?.data.error || 'Server Error', type: 'error' })
+
             console.log(err);
         })
     }
