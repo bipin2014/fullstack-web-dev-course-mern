@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { apiUrl } from '../../../constants'
+import { CartContext } from '../../../context/cart/CartContext'
 
 export default function Product({ product }) {
+    const { addToCart } = useContext(CartContext)
+
+
     return (
         <div className="rounded-md border">
             <img
@@ -34,6 +38,7 @@ export default function Product({ product }) {
                 </div>}
 
                 <button
+                    onClick={() => addToCart(product)}
                     type="button"
                     className="mt-4 w-full rounded-sm bg-black px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                 >

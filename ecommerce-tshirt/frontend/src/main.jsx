@@ -15,6 +15,12 @@ import Users from './module/admin/Users/index.jsx'
 import Products from './module/admin/Products/index.jsx'
 import Brands from './module/admin/Brands/index.jsx'
 import UploadProvider from './context/uploadfile/UploadProvider.jsx'
+import Cart from './module/user/Cart/index.jsx'
+import CartProvider from './context/cart/CartProvider.jsx'
+import AdminPrivateRoute from './routes/AdminPrivateRoute.jsx'
+import EsewaSuccess from './module/user/Cart/esewa/EsewaSuccess.jsx'
+import EsewaFailed from './module/user/Cart/esewa/EsewaFailed.jsx'
+import OrderDetails from './module/user/order/OrderDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -35,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'admin',
-        element: <Dashboard />,
+        element: <AdminPrivateRoute><Dashboard /></AdminPrivateRoute>,
         children: [
           {
             path: 'dashboard',
@@ -54,6 +60,27 @@ const router = createBrowserRouter([
             element: <Brands />
           },
 
+        ]
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            path: 'cart',
+            element: <Cart />
+          },
+          {
+            path: 'esewa_payment_success',
+            element: <EsewaSuccess />
+          },
+          {
+            path: 'esewa_payment_failed',
+            element: <EsewaFailed />
+          },
+          {
+            path: 'orders/:orderId',
+            element: <OrderDetails />
+          },
         ]
       }
     ]
@@ -78,8 +105,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ToastProvider>
       <AuthProvier>
         <UploadProvider>
-          <Toaster />
-          <RouterProvider router={router} />
+          <CartProvider>
+            <Toaster />
+            <RouterProvider router={router} />
+          </CartProvider>
         </UploadProvider>
       </AuthProvier>
     </ToastProvider>

@@ -1,24 +1,29 @@
-import React, { useContext } from 'react'
-import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
+import React, { useContext, useEffect } from 'react'
+import { Menu, X, ShoppingCart } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/auth/AuthContext';
+import { CartContext } from '../../../context/cart/CartContext';
 
 const menuItems = [
     {
         name: 'Home',
         href: '/',
+        role: [0, 1]
     },
     {
         name: 'About',
         href: '/',
+        role: [0, 1]
     },
     {
         name: 'Contact',
         href: '/',
+        role: [0, 1]
     },
     {
         name: 'Dashboard',
         href: '/admin',
+        role: [1]
     },
 ]
 
@@ -26,8 +31,10 @@ const menuItems = [
 const Navbar = () => {
 
     const { isAuthenticated, user, logout } = useContext(AuthContext)
+    const { cart, getCarts } = useContext(CartContext)
 
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+    const [userMenuItems, setUserMenuItems] = React.useState([])
 
     const navigate = useNavigate();
     const toggleMenu = () => {
@@ -37,6 +44,15 @@ const Navbar = () => {
     const goToPath = (path) => {
         navigate(path);
     };
+
+    useEffect(() => {
+        if (user && user._id) {
+            const filteredMenu = menuItems.filter(menu => menu.role.includes(user.role))
+            setUserMenuItems(filteredMenu)
+            getCarts()
+        }
+    }, [user])
+
 
     return (
         <div className="relative w-full bg-white">
@@ -51,7 +67,7 @@ const Navbar = () => {
                 </div>
                 <div className="hidden grow items-start lg:flex">
                     <ul className="ml-12 inline-flex space-x-8">
-                        {menuItems.map((item) => (
+                        {userMenuItems.map((item) => (
                             <li key={item.name}>
                                 <Link
                                     to={item.href}
@@ -65,8 +81,15 @@ const Navbar = () => {
                     </ul>
                 </div>
                 {isAuthenticated ?
-                    <div className="hidden space-x-2 lg:block">
+                    <div className="hidden space-x-2 lg:flex items-center">
                         <span>{user.name}</span>
+                        {user.role == 0 && (
+                            <span className='cursor-pointer' onClick={() => navigate('/users/cart')}>
+                                <span className="text-xs px-3 bg-red-200 text-red-800 rounded-full">{cart?.products?.length || 0}</span>
+                                <ShoppingCart />
+                            </span>
+
+                        )}
                         <button
                             onClick={logout}
                             type="button"
