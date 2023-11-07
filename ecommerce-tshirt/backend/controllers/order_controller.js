@@ -19,7 +19,9 @@ exports.getOrderForPayment = async (req, res, next) => {
         if (!order) {
             return res.status(400).json({ error: 'No order found' });
         }
-        req.order = order;
+        order.status = "paid and processing"
+        const updatedOrder = await order.save()
+        req.order = updatedOrder;
         next();
     } catch (err) {
         return res.status(400).json({ error: err?.message || 'No Order found' });

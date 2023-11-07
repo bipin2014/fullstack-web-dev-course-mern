@@ -24,6 +24,11 @@ export default function Sidebar() {
             label: 'Brands',
             to: '/admin/brands',
             icon: <Radar />
+        },
+        {
+            label: 'Order',
+            to: '/admin/orders',
+            icon: <Radar />
         }
     ]
 

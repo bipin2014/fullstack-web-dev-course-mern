@@ -21,6 +21,7 @@ import AdminPrivateRoute from './routes/AdminPrivateRoute.jsx'
 import EsewaSuccess from './module/user/Cart/esewa/EsewaSuccess.jsx'
 import EsewaFailed from './module/user/Cart/esewa/EsewaFailed.jsx'
 import OrderDetails from './module/user/order/OrderDetails.jsx'
+import Orders from './module/admin/Orders/index.jsx'
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
           {
             path: 'brands',
             element: <Brands />
+          },
+          {
+            path: 'orders',
+            element: <Orders />
           },
 
         ]
