@@ -15,7 +15,7 @@ const app = express()
 var cors = require('cors');
 
 const hostname = '127.0.0.1';
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 
 app.use(express.json())
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.options('*', cors());
 
-mongoose.connect('mongodb+srv://admin:k5k3CCSIrzI3p0dc@youtubecluster.mt2bkwq.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.DB_URL)
     .then(res => {
         console.log("Connected to DB Sucessfully");
     }).catch(err => {
