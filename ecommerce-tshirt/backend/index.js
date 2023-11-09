@@ -41,6 +41,10 @@ app.use('/api/carts', cartRoute);
 app.use('/api/orders', orderRoute);
 app.use('/api/esewa', esewaRoute);
 
+app.get('/health', (req, res) => {
+    res.json({ "message": "Your app is running" })
+})
+
 app.use(`/api/uploads`, express.static('uploads'));
 
 app.listen(port, () => {
