@@ -16,7 +16,7 @@ var cors = require('cors');
 
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 5000;
-
+const path = require('path')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -46,6 +46,14 @@ app.get('/health', (req, res) => {
 })
 
 app.use(`/api/uploads`, express.static('uploads'));
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static('dist'))
+}
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", 'index.html'))
+})
+
 
 app.listen(port, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
